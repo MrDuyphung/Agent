@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Student Record Management</title>
+  <title>Search Agent</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,18 +24,21 @@
 {{--    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">--}}
   <!-- common css -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
   <!-- end common css -->
 
 
 </head>
 <body data-base-url="{{url('/')}}">
 
+{{--<iframe width="560" height="315" src="https://www.youtube.com/embed/qwM23_kF4v4" frameborder="0" allowfullscreen></iframe>--}}
+
   <div class="container-scroller" id="app">
 {{--    @include('layout.header')--}}
     <div class="container-fluid page-body-wrapper">
       @include('layout.sidebar')
 
-      <div class="main-panel">
+{{--      <div class="main-panel">--}}
         <div class="content-wrapper">
           @yield('content')
         </div>
@@ -50,16 +53,12 @@
   <!-- end base js -->
 
   <!-- plugin js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <!-- end plugin js -->
 
   <!-- common js -->
-  <script src="{{asset('assets/js/chart.js')}}"></script>
-  <script src="{{asset('assets/js/off-canvas.js')}}"></script>
-  <script src="{{asset('assets/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('assets/js/misc.js')}}"></script>
-  <script src="{{asset('assets/js/settings.js')}}"></script>
-  <script src="{{asset('assets/js/todolist.js')}}"></script>
+<script src="{{asset('assets/js/checkmepls.js')}}"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {{--  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>--}}
@@ -68,4 +67,5 @@
 
 
 </body>
+
 </html>

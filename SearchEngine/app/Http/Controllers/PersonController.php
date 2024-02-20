@@ -14,24 +14,33 @@ class PersonController extends Controller
     /**
      * Display a listing of the resource.
      */
+//    public function index(Request $request)
+//    {
+//        // Lấy dữ liệu từ request
+//        $search = $request->input('data'); // Assumed 'data' is the name of the input field
+//
+//        // Lấy ID của người dùng đang đăng nhập
+//        $accId = Auth::guard('account')->user()->id;
+//
+//        // Thêm bản ghi mới vào bảng 'new_searchs'
+//        DB::table('new_searchs')->insert([
+//            'topic_name' => $search,
+//            'acc_id' => $accId,
+//        ]);
+//
+//        // Tìm kiếm theo tên trong bảng 'Person'
+//        $results = Person::where('name', 'like', "%$search%")->get();
+//
+//        // Trả về kết quả dưới dạng JSON
+//        return response()->json($results);
+//    }
+
     public function index(Request $request)
     {
-        // Lấy dữ liệu từ request
-        $search = $request->input('data'); // Assumed 'data' is the name of the input field
+        $search = $request->input('data');
 
-        // Lấy ID của người dùng đang đăng nhập
-        $accId = Auth::guard('account')->user()->id;
-
-        // Thêm bản ghi mới vào bảng 'new_searchs'
-        DB::table('new_searchs')->insert([
-            'topic_name' => $search,
-            'acc_id' => $accId,
-        ]);
-
-        // Tìm kiếm theo tên trong bảng 'Person'
+//        $search = 'Mrs. Petra Strosin MD';
         $results = Person::where('name', 'like', "%$search%")->get();
-
-        // Trả về kết quả dưới dạng JSON
         return response()->json($results);
     }
 

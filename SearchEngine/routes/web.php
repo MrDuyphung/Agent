@@ -20,10 +20,11 @@ Route::middleware(['accountMiddleware'])->get('/', function (){
 Route::middleware(['accountMiddleware'])->get('/', [\App\Http\Controllers\PersonController::class, 'index2'])->name('layout.sidebar');
 
     Route::get('/search', [\App\Http\Controllers\PersonController::class, 'index'])->name('person.search');
-//Route::post('/save-search', [\App\Http\Controllers\NewSearchController::class, 'store'])->name('search.save');
+Route::post('/save-search', [\App\Http\Controllers\PersonController::class, 'index'])->name('search.save');
 Route::get('/search/{id}', [\App\Http\Controllers\NewSearchController::class, 'searchById'])->name('search.byId');
 
-
+Route::get('/history', [\App\Http\Controllers\HistoryChatController::class, 'index'])->name('history.search');
+Route::get('/del_session', [\App\Http\Controllers\HistoryChatController::class, 'destroy'])->name('history.destroy');
 
 Route::get('/login-account', [\App\Http\Controllers\AccountController::class, 'login'])-> name('account.login');
 Route::post('/login-account', [\App\Http\Controllers\AccountController::class, 'loginProcess'])-> name('account.loginProcess');

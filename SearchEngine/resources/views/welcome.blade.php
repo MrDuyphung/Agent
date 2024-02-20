@@ -38,14 +38,13 @@
         </div>
         <div class="chat-container">
             <!-- Tin nhắn sẽ được hiển thị ở đây -->
-
         </div>
     </div>
     <div class="container-fluid clearfix">
-        <form id="searchForm" class="search-form" action="#" method="post">
-            @csrf
+        <form id="searchForm" class="search-form" action="#" method="get">
+
             <div class="input-group rounded-pill">
-                <input id="search_word" name="search_word" type="text" class="form-control rounded-pill" placeholder="Try your first search here...">
+                <input id="search_word" type="text" class="form-control rounded-pill" placeholder="Try your first search here...">
                 <div class="input-group-append">
                     <button class="btn btn-primary square-rounded" type="submit">
                         <i class="mdi mdi-arrow-up"></i>
@@ -54,275 +53,287 @@
             </div>
         </form>
     </div>
-        <button onclick="SubmitSearch()"  class="btn btn-secondary square-rounded" type="button">
-            <i class="mdi mdi-attachment"></i>
-        </button>
+    <button onclick="SubmitSearch()"  class="btn btn-secondary square-rounded" type="button">
+        <i class="mdi mdi-attachment"></i>
+    </button>
+    <button class="btn btn-outline-info" onclick="openForm()"> <i class="mdi mdi-account-search"></i>
+        Person Searching
+    </button>
+    <button class="btn btn-inverse-success" onclick="openForm2()"> <i class="mdi mdi-camera-iris"></i>
+        Upload Photo/Video
+    </button>
     </div>
-    <style>
-        .content {
-            display: flex;
-            justify-content: center; /* Căn giữa theo chiều ngang */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            height: 80vh; /* Đảm bảo rằng nội dung nằm giữa màn hình */
+
+
+    <div class="form-popup" id="myForm">
+        <form action="/action_page.php" class="form-container">
+            <h1 style="text-align: center;">Add Input Here</h1>
+
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name" required>
+
+            <label for="age"><b>Age</b></label>
+            <input type="number" placeholder="Enter Age" name="age" required>
+
+            <label for="gender"><b>Gender</b></label><br>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label><br>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label><br>
+
+            <label for="phone"><b>Phone</b></label>
+            <input type="tel" placeholder="Enter Phone Number" name="phone" required>
+
+            <label for="mail"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" required><br>
+
+            <label for="cccd"><b>CCCD</b></label>
+            <input type="text" placeholder="Enter CCCD" name="cccd" required>
+
+            <label for="address"><b>Address</b></label>
+            <input type="text" placeholder="Enter Address" name="address" required><br>
+
+            <label for="picture" id="picture-label"><b>Picture</b></label><br>
+            <input type="file" id="picture" name="picture" accept="image/*" onchange="displaySelectedImage(event)">
+            <button type="button" onclick="removePicture()">Remove</button><br>
+
+            <!-- Thẻ img để hiển thị hình ảnh được chọn -->
+            <img id="selected-image" src="#" alt="Selected Image" style="display: none; max-width: 300px; max-height: 300px;">
+
+            <button type="submit" class="btn">
+                <i class="mdi mdi-arrow-up"></i>Search Now</button>
+            <button type="button" class="close-btn" onclick="closeForm()">
+                <i class="mdi mdi-close" style="color: red;"></i> <!-- Sử dụng icon dấu x màu đỏ -->
+            </button>
+        </form>
+
+
+    </div>
+    <div class="form-popup" id="myForm2">
+        <form action="/upload" class="form-container" enctype="multipart/form-data">
+            <h1>Upload Photo/Video</h1>
+
+            <!-- Ô nhập message -->
+            <label for="message"><b>Message</b></label>
+            <input id="message" name="message" placeholder="Enter your message" required><br>
+
+            <!-- Ô chọn file -->
+            <label for="file"><b>File</b></label>
+            <input type="file" id="file" name="file" accept="image/*, video/*" onchange="displayDemoMedia(event)" required>
+
+            <!-- Hiển thị hình ảnh demo -->
+            <img id="demo-image" src="#" alt="Demo Image" style="display: none; max-width: 300px; max-height: 300px;">
+
+            <!-- Hiển thị video demo -->
+            <video id="demo-video" src="#" controls style="display: none; max-width: 300px;"></video>
+
+            <button type="submit" class="btn"><i class="mdi mdi-arrow-up"></i>Send</button>
+            <button type="button" class="close-btn" onclick="closeForm2()"> <i class="mdi mdi-close" style="color: red;"></i></button>
+        </form>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+
+
+
+        {{--$(document).ready(function(){--}}
+        {{--    $('#search_word').keyup(function(e){--}}
+        {{--        if(e.keyCode == 13){ // Kiểm tra xem phím nhấn có phải là Enter không--}}
+        {{--            SubmitSearch(); // Gọi hàm SubmitSearch() để thực hiện tìm kiếm--}}
+        {{--        }--}}
+        {{--    });--}}
+
+        {{--    $('#searchForm').submit(function(e){--}}
+        {{--        e.preventDefault(); // Ngăn chặn gửi yêu cầu mặc định của form--}}
+
+        {{--        var searchWord = $('#search_word').val().trim(); // Lấy dữ liệu từ input--}}
+        {{--        if (searchWord !== '') { // Kiểm tra xem từ khóa tìm kiếm có rỗng hay không--}}
+        {{--            // Gửi yêu cầu AJAX chỉ khi từ khóa tìm kiếm không rỗng--}}
+        {{--            $.ajax({--}}
+        {{--                url: "{{ route('search.save') }}", // Đường dẫn tới route xử lý lưu dữ liệu--}}
+        {{--                type: "POST",--}}
+        {{--                data: {--}}
+        {{--                    search_word: searchWord--}}
+        {{--                },--}}
+        {{--                success: function(response) {--}}
+        {{--                    // Xử lý phản hồi từ server nếu cần--}}
+        {{--                    console.log(response);--}}
+        {{--                },--}}
+        {{--                error: function(xhr) {--}}
+        {{--                    // Xử lý lỗi nếu có--}}
+        {{--                    console.error(xhr.responseText);--}}
+        {{--                }--}}
+        {{--            });--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
+
+        <!-- Trong hàm displayUserMessage -->
+
+
+
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
         }
 
-        .grid-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between; /* Các ô vuông sẽ được căn đều trên mỗi hàng */
-            max-width: 800px; /* Điều chỉnh kích thước của lưới */
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+        function openForm2() {
+            document.getElementById("myForm2").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
         }
 
-        .grid-item {
-            flex: 0 0 calc(35% - 19px); /* Chia lưới thành 3 cột và điều chỉnh khoảng cách giữa chúng */
-            background-color: #d3d3d3;
-            margin-bottom: 20px; /* Điều chỉnh khoảng cách dưới cùng của mỗi ô vuông */
-            border-radius: 5px;
-            padding: 20px;
-            text-align: center;
+        function closeForm2() {
+            document.getElementById("myForm2").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
         }
 
-        .menu-icon {
-            font-size: 36px;
+        function displayDemoMedia(event) {
+            const file = event.target.files[0];
+            const fileType = file.type.split('/')[0]; // Lấy loại file
+
+            if (fileType === 'image') {
+                const img = document.getElementById('demo-image');
+                const video = document.getElementById('demo-video');
+                img.style.display = 'block';
+                video.style.display = 'none';
+                img.src = URL.createObjectURL(file);
+            } else if (fileType === 'video') {
+                const img = document.getElementById('demo-image');
+                const video = document.getElementById('demo-video');
+                img.style.display = 'none';
+                video.style.display = 'block';
+                video.src = URL.createObjectURL(file);
+            }
         }
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchForm = document.querySelector('.search-form');
+            const chatContainer = document.querySelector('.chat-container');
+            const gridContainer = document.querySelector('.grid-container');
 
-        .menu-title {
-            display: block;
-            margin-top: 10px;
-        }
-        .title {
-            font-family: 'Roboto', sans-serif;
-            font-size: 28px;
-            text-align: center;
-            margin-top: 30px; /* Khoảng cách từ tiêu đề đến lưới */
-        }
-        .chat-container {
-            width: 80%;
-            max-width: 1600px; /* Điều chỉnh kích thước của container chat */
-            max-height: calc(80vh - 100px); /* 80% chiều cao của viewport trừ đi chiều cao của thanh search */
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto; /* Hiển thị thanh cuộn ngang khi nội dung vượt quá */
-            flex-grow: 1; /* Cho phép chat-container mở rộng để điều chỉnh kích thước trong flexbox layout */
-        }
+            searchForm.addEventListener('submit', function (event) {
+                event.preventDefault();
 
+                const searchInput = searchForm.querySelector('input[type="text"]');
+                const searchTerm = searchInput.value;
 
-        .chat-bubble {
-            background-color: #d3d3d3;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .system-chat {
-            align-self: flex-start; /* Đặt hệ thống chat ở bên trái */
-        }
-
-        .user-chat {
-            align-self: flex-end; /* Đặt người dùng chat ở bên phải */
-        }
-
-        .search-bar {
-            margin-top: 20px;
-        }
-
-        .search-bar input[type="text"] {
-            padding: 10px;
-            width: 70%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .search-bar button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        /*.avatar {*/
-        /*    width: 30px; !* Độ rộng của avatar *!*/
-        /*    height: 30px; !* Độ cao của avatar *!*/
-        /*    border-radius: 50%; !* Hình dạng hình tròn *!*/
-        /*    margin-right: 10px; !* Khoảng cách giữa avatar và nội dung tin nhắn *!*/
-        /*}*/
-
-        /*.user-chat .avatar {*/
-        /*    float: right; !* Avatar người dùng nằm bên phải *!*/
-        /*}*/
-
-        /*.system-chat .avatar {*/
-        /*    float: left; !* Avatar hệ thống nằm bên trái *!*/
-        /*}*/
-
-    </style>
-    <style>
-        .footer {
-            padding: 20px 0;
-        }
-
-        .search-form {
-            display: flex;
-            justify-content: center;
-        }
-
-        .input-group {
-            width: 100%; /* Sử dụng toàn bộ chiều rộng của container */
-        }
-
-        .input-group input {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .input-group-append {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-        .btn-secondary {
-            background-color: #ffffff;
-            border-color:  #ffffff;
-        }
-
-        .btn-primary {
-            background-color: #6c6e72;
-            border-color: #6c6e72;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .square-rounded {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-        .hidden {
-            display: none;
-        }
-        .avatar {
-            display: none; /* Ẩn avatar */
-    </style>
-
-    {{--        @foreach($topicNames as $topicName)--}}
-    {{--            <li class="nav-item">--}}
-    {{--                <a class="nav-link" href="#">--}}
-    {{--                    <span class="menu-title" style="color: white;">{{ $topicName }}</span>--}}
-    {{--                </a>--}}
-    {{--            </li>--}}
-    {{--        @endforeach--}}
-@endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    // Hàm để ẩn grid-container
-    function hideGridContainer() {
-        const gridContainer = document.querySelector('.grid-container');
-        gridContainer.style.display = 'none'; // Ẩn grid-container
-    }
-
-    // Hàm để gửi yêu cầu tìm kiếm
-    function SubmitSearch() {
-        var search_word = document.getElementById('search_word').value.trim(); // Loại bỏ khoảng trắng đầu và cuối
-        if (search_word !== '') {
-            console.log(search_word); // Debug: Kiểm tra giá trị được nhập
-
-            $.ajax({
-                url: "{{ route('person.search') }}",
-                type: "GET",
-                data: { data: search_word },
-                success: function(response) {
-                    // Xử lý phản hồi từ máy chủ
-                    console.log(response); // Debug: Kiểm tra phản hồi từ máy chủ
-                    displaySearchResults(response);
-                    hideGridContainer(); // Ẩn grid-container sau khi nhận được kết quả
-                    // Gọi hàm để thêm bản ghi vào bảng search_topics
-                    // saveSearchTopic(search_word);
-                },
-                error: function(xhr) {
-                    // Xử lý lỗi nếu có
-                    console.error(xhr.responseText);
-                }
-            });
-        }
-    }
-
-{{--    $(document).ready(function(){--}}
-{{--        $('#searchForm').submit(function(e){--}}
-{{--            e.preventDefault(); // Ngăn chặn gửi yêu cầu mặc định của form--}}
-{{--@csrf--}}
-{{--            var searchWord = $('#search_word').val(); // Lấy dữ liệu từ input--}}
-
-{{--            $.ajax({--}}
-{{--                url: "{{ route('search.save') }}", // Đường dẫn tới route xử lý lưu dữ liệu--}}
-{{--                type: "POST",--}}
-{{--                data: {--}}
-{{--                    search_word: searchWord--}}
-{{--                },--}}
-{{--                success: function(response) {--}}
-{{--                    // Xử lý phản hồi từ server nếu cần--}}
-{{--                    console.log(response);--}}
-{{--                },--}}
-{{--                error: function(xhr) {--}}
-{{--                    // Xử lý lỗi nếu có--}}
-{{--                    console.error(xhr.responseText);--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    });--}}
-
-    // Hàm để hiển thị tin nhắn của người dùng trong chat-container
-    <!-- Trong hàm displayUserMessage -->
-    <!-- Trong hàm displayUserMessage -->
-    function displayUserMessage(message) {
-        const chatContainer = document.querySelector('.chat-container');
-
-        // Tạo bubble cho tin nhắn của người dùng và thêm vào chat-container
-        const userBubble = document.createElement('div');
-        userBubble.classList.add('chat-bubble', 'user-chat');
-        userBubble.innerHTML = `
-        <span class="message">${message}</span>
-    `;
-        chatContainer.appendChild(userBubble);
-
-        // Cuộn xuống bottom của chat-container sau khi thêm tin nhắn
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchForm = document.querySelector('.search-form');
-
-        searchForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const searchInput = searchForm.querySelector('input[type="text"]');
-            const searchTerm = searchInput.value.trim(); // Loại bỏ khoảng trắng đầu và cuối
-
-            // Kiểm tra nếu tin nhắn không rỗng thì hiển thị trong chat-container
-            if (searchTerm !== '') {
-                // Tạo bubble cho tin nhắn của người dùng và thêm vào chat-container
+                // Tạo tin nhắn của người dùng
                 const userMessage = document.createElement('div');
                 userMessage.classList.add('chat-bubble', 'user-chat');
                 userMessage.innerHTML = `
-                    <img src="path/to/user-avatar.png" class="avatar" alt="User Avatar">
-                    <span class="message">${searchTerm}</span> <!-- Thêm phần văn bản đã tìm kiếm vào tin nhắn -->
-                `;
-                document.querySelector('.chat-container').appendChild(userMessage);
+            <span class="message">${searchTerm}</span>
+        `;
 
-                // Gọi hàm để gửi yêu cầu tìm kiếm
-                SubmitSearch();
+                // Hiển thị tin nhắn của người dùng trong khung chat
+                chatContainer.appendChild(userMessage);
 
+                // Ẩn grid-container
+                gridContainer.classList.add('hidden');
                 // Xóa nội dung trong ô tìm kiếm sau khi đã xử lý
                 searchInput.value = '';
-            }
+            });
+            $('#search_word').keypress(function(event) {
+                if (event.keyCode === 13) {
+
+                    var search_word = document.getElementById('search_word').value;
+                    console.log(search_word);
+                    $.ajax({
+                        url: "http://localhost/SearchEngine/public/api/person",
+                        type: "GET",
+                        data: { data: search_word },
+                        success: function(response) {
+                            console.log(response)
+                            var person = response.map(function (current, index){
+                                return `<div class="profile">
+                                               <img class="profile-picture" src="${current.image}">
+                                          <div class="profile-info">
+                                            <p>Tên: ${current.name}</p>
+                                            <p>Giới tính: ${current.gender}</p>
+                                            <p>Tuổi: ${current.age}</p>
+                                            <p>Số ID/Hộ chiếu: ssss</p>
+                                            <p>Số điện thoại: ${current.phone}</p>
+                                            <p>Email: ${current.email}</p>
+                                            <p>Địa chỉ: ${current.address}</p>
+                                            <p>Biography: ${current.Biography}</p>
+                                          </div>
+                                        </div>`;
+                            });
+
+                            $.ajax({
+                                url: "{{route('history.search')}}",
+                                type: "GET",
+                                data: {
+                                    search_word: search_word,
+                                    history: person
+                                },
+                                success: function (response) {
+                                    var history = response.map(function (current, index){
+                                        return ` <li><a data-number="${index}" href="#">${current.search_word}</a></li>`
+                                    })
+                                    console.log(history.join(''))
+                                    document.querySelector('.search-list').innerHTML = history.join('')
+
+                                    var searchItems = document.querySelectorAll('.search-list li a');
+                                    searchItems.forEach(function(item) {
+                                        item.addEventListener('click', function(event) {
+                                            event.preventDefault();
+                                            console.log('click event added');
+                                            var index = item.getAttribute('data-number');
+                                            console.log(response[index].content);
+
+                                            // Tạo tin nhắn của người dùng
+                                            const userMessage = document.createElement('div');
+                                            userMessage.classList.add('chat-bubble', 'user-chat');
+                                            userMessage.innerHTML = `
+                                                <span class="message">${response[index].search_word}</span>
+                                            `;
+
+                                            // Hiển thị tin nhắn của người dùng trong khung chat
+                                            chatContainer.appendChild(userMessage);
+
+                                            // Ẩn grid-container
+                                            gridContainer.classList.add('hidden');
+
+                                            const systemMessage = document.createElement('div');
+                                            systemMessage.classList.add('chat-bubble', 'system-chat');
+                                            systemMessage.innerHTML = `<span class="message">Hệ thống trả lời:</span>${response[index].content.join('')}`;
+
+                                            chatContainer.appendChild(systemMessage);
+                                        });
+                                    });
+                                },
+                                error: function (xhr) {
+                                    console.error(xhr.responseText);
+                                }
+                            })
+                            const systemMessage = document.createElement('div');
+                            systemMessage.classList.add('chat-bubble', 'system-chat');
+                            systemMessage.innerHTML = `<span class="message">Hệ thống trả lời:</span>${person.join('')}`;
+
+                            chatContainer.appendChild(systemMessage);
+                        },
+                        error: function(xhr) {
+                            // Xử lý lỗi nếu có
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+
         });
-    });
 
+    </script>
 
-</script>
+    <script src="{{asset('assets/js/checkmepls.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
+@endsection
+
 
 
