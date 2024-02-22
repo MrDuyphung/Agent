@@ -58,7 +58,7 @@
   <!-- end plugin js -->
 
   <!-- common js -->
-<script src="{{asset('assets/js/checkmepls.js')}}"></script>
+<script src="{{asset('js/index.js')}}"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {{--  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>--}}

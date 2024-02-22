@@ -1,57 +1,16 @@
-
 .content {
     display: flex;
     justify-content: center; /* Căn giữa theo chiều ngang */
     align-items: center; /* Căn giữa theo chiều dọc */
     height: 80vh; /* Đảm bảo rằng nội dung nằm giữa màn hình */
-    margin-left: 250px; /* Tăng khoảng cách từ bên trái */
 }
-
 
 .grid-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between; /* Các ô vuông sẽ được căn đều trên mỗi hàng */
     max-width: 800px; /* Điều chỉnh kích thước của lưới */
-}
-
-/* CSS cho form */
-.form-popup {
-    display: none;
-    position: fixed;
-    z-index: 9;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 800%; /* Điều chỉnh chiều rộng của form */
-    max-width: 600px; /* Giới hạn chiều rộng tối đa của form */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-
-/* CSS cho overlay */
-.overlay {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 8;
-}
-
-/* CSS cho button Close */
-.close-btn {
-    position: absolute;
-    top: 10px; /* Điều chỉnh khoảng cách từ trên xuống */
-    right: 10px; /* Điều chỉnh khoảng cách từ phải sang trái */
-    background: none;
-    border: none;
-    cursor: pointer;
+    margin-left: 280px;
 }
 
 .grid-item {
@@ -61,6 +20,7 @@
     border-radius: 5px;
     padding: 20px;
     text-align: center;
+    border: 2px solid #0b0d14;
 }
 
 .menu-icon {
@@ -85,9 +45,7 @@
     flex-direction: column;
     overflow-y: auto; /* Hiển thị thanh cuộn ngang khi nội dung vượt quá */
     flex-grow: 1; /* Cho phép chat-container mở rộng để điều chỉnh kích thước trong flexbox layout */
-    margin: auto; /* Để căn giữa */
 }
-
 
 
 .chat-bubble {
@@ -98,6 +56,7 @@
 }
 
 .system-chat {
+    width: 50%;
     align-self: flex-start; /* Đặt hệ thống chat ở bên trái */
 }
 
@@ -125,87 +84,26 @@
     border-radius: 5px;
     cursor: pointer;
 }
-/*.avatar {*/
-/*    width: 30px; !* Độ rộng của avatar *!*/
-/*    height: 30px; !* Độ cao của avatar *!*/
-/*    border-radius: 50%; !* Hình dạng hình tròn *!*/
-/*    margin-right: 10px; !* Khoảng cách giữa avatar và nội dung tin nhắn *!*/
-/*}*/
-
-/*.user-chat .avatar {*/
-/*    float: right; !* Avatar người dùng nằm bên phải *!*/
-/*}*/
-
-/*.system-chat .avatar {*/
-/*    float: left; !* Avatar hệ thống nằm bên trái *!*/
-/*}*/
-/* Tùy chỉnh các thuộc tính cho các kích thước màn hình nhỏ */
-@media (max-width: 768px) {
-    .grid-item {
-        flex: 0 0 calc(50% - 10px); /* Thiết lập để mỗi hàng chứa 2 ô vuông */
-    }
-}
-
-/* Tùy chỉnh các thuộc tính cho các kích thước màn hình rất nhỏ (điện thoại di động, máy tính bảng) */
-@media (max-width: 576px) {
-    .grid-item {
-        flex: 0 0 100%; /* Thiết lập để mỗi ô vuông chiếm toàn bộ chiều rộng của hàng */
-    }
-}
-
-/* Điều chỉnh độ rộng của input search trong ô tìm kiếm */
-.search-form input[type="text"] {
-    width: 100%; /* Chiếm toàn bộ chiều rộng của container */
-}
-
-/* Điều chỉnh chiều rộng của nút tìm kiếm trong ô tìm kiếm */
-.search-form button {
-    width: 40px; /* Điều chỉnh kích thước của nút */
-}
-
-/* Ẩn avatar trong tin nhắn */
 .avatar {
-    display: none;
-}
-.content {
-    transition: center 0.3s ease; /* Giữ cùng thời gian chuyển đổi với sidebar */
-}
-
-.sidebar {
-    transition: width 0.3s ease; /* Giữ cùng thời gian chuyển đổi với nội dung */
+    width: 30px; /* Độ rộng của avatar */
+    height: 30px; /* Độ cao của avatar */
+    border-radius: 50%; /* Hình dạng hình tròn */
+    margin-right: 10px; /* Khoảng cách giữa avatar và nội dung tin nhắn */
 }
 
-@media (max-width: 250px) {
-    .content {
-        center: 100px; /* Khi sidebar thu gọn, nội dung được dịch sang phải */
-    }
+.user-chat .avatar {
+    float: right; /* Avatar người dùng nằm bên phải */
 }
 
-.profile {
-    width: 400px;
-    margin: auto;
+.system-chat .avatar {
+    float: left; /* Avatar hệ thống nằm bên trái */
 }
 
-.profile-picture {
-    width: 100px;
-    height: 100px;
-    background-color: #f1f1f1;
-    border-radius: 50%;
-    margin-bottom: 10px;
+.footer {
+    padding: 20px 0;
 }
 
-.profile-info p {
-    margin-bottom: 10px;
-}
 
- .footer {
-     padding: 20px 0;
- }
-
-.search-form {
-    display: flex;
-    justify-content: center;
-}
 
 .input-group {
     width: 100%; /* Sử dụng toàn bộ chiều rộng của container */
@@ -242,8 +140,34 @@
 .hidden {
     display: none;
 }
-.avatar {
-    display: none; /* Ẩn avatar */
+.profile {
+    width: 400px;
+    margin: auto;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    margin-bottom: 10px;
+}
+
+.video-container {
+    position: relative;
+    width: 100%; /* Điều chỉnh kích thước video container tại đây */
+    padding-bottom: 1.25%; /* Tỷ lệ khung hình 16:9 (56.25% = 9/16 * 100) */
+}
+
+.video-container iframe {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 240px;
 }
 
 .form-popup {
@@ -270,4 +194,149 @@
     left: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 8;
+}
+
+.sidebar {
+    width: 200px; /* Chiều rộng mặc định của sidebar */
+    height: 100vh; /* Chiều cao của sidebar */
+    background-color: #333; /* Màu nền của sidebar */
+    color: #fff; /* Màu chữ của sidebar */
+    transition: width 0.3s ease; /* Hiệu ứng khi thay đổi chiều rộng */
+    position: relative;
+    display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+    flex-direction: column; /* Xếp nội dung theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+}
+
+
+.toggle-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+}
+
+.toggle-btn i {
+    font-size: 20px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.new-chat {
+    margin-top: 20px; /* Thêm margin top cho chức năng New Chat */
+    display: flex;
+    align-items: center;
+}
+
+
+
+.upload-options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    z-index: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.new-chat-icon-button {
+    margin-right: 0px;
+}
+.search-history {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.search-list {
+    list-style: none;
+    padding: 0;
+}
+
+.search-list li {
+    margin-bottom: 5px;
+}
+
+.search-list li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.search-list li a:hover {
+    text-decoration: underline;
+}
+.search-history-container {
+    border: 1px solid #fff; /* Tạo viền trắng 1px xung quanh khung */
+    border-radius: 5px; /* Làm tròn các góc của khung */
+    padding: 10px; /* Thêm padding để tạo khoảng cách giữa viền và nội dung */
+    max-height: 200px; /* Đặt chiều cao tối đa cho khung lịch sử */
+    overflow-y: auto; /* Cho phép cuộn khi lịch sử tìm kiếm dài hơn */
+}
+
+.selected-media {
+    display: none;
+    width: 100px;
+    height: 100px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding: .375rem .75rem;
+    margin-bottom: 20px;
+}
+
+
+.selected-media.show {
+    display: block;
+}
+
+.selected-media span {
+    margin-right: 10px;
+}
+
+.selected-media button {
+    margin-left: 10px;
+}
+
+.upload-options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    z-index: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-form {
+    position: relative;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.search-input {
+    width: 100%;
+    margin-top: 10px; /* Adjust as needed */
+}
+
+#pinButton {
+    transform: rotate(270deg) scale(1.5); /* Điều chỉnh tỷ lệ phóng to tùy ý */
+    /*transform: scale(1.5);*/
+
 }

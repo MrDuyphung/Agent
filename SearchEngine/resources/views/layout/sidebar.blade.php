@@ -30,15 +30,15 @@
     </div>
 
 
-        <ul class="nav">
-        @foreach($topicNames as $topicName)
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="redirectToTopic({{ $topicName->id }})">
-                    <span class="menu-title" style="color: white;">{{ $topicName->topic_name }}</span>
-                </a>
-            </li>
-        @endforeach
-    </ul>
+{{--        <ul class="nav">--}}
+{{--        @foreach($topicNames as $topicName)--}}
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link" href="#" onclick="redirectToTopic({{ $topicName->id }})">--}}
+{{--                    <span class="menu-title" style="color: white;">{{ $topicName->topic_name }}</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endforeach--}}
+{{--    </ul>--}}
     <!-- Nội dung của sidebar -->
     <!-- Thêm các mục mới vào dưới cùng của sidebar -->
     <ul class="nav" style="margin-top: auto;">
@@ -66,24 +66,10 @@
     </ul>
 </div>
 
-
-
 <script>
-    function redirectToWelcome() {
-        window.location.href = "http://localhost/SearchEngine/public"; // Chuyển hướng về trang chính
-    }
-
-    function redirectToTopic(topicId) {
-        window.location.href = "http://localhost/SearchEngine/public/search/" + topicId;
-    }
-
-
-
-    // Hàm để hiển thị kết quả tìm kiếm trong chat-container và thêm vào lịch sử tìm kiếm trong sideba
-
     function toggleSidebar() {
         var sidebar = document.getElementById("sidebar");
-        var content = document.querySelector(".content");
+        // var content = document.querySelector(".content");
         var toggleBtn = document.querySelector(".toggle-btn");
         var newChatLink = document.querySelector(".new-chat");
         var settingsLink = document.querySelector(".settings-link");
@@ -94,7 +80,7 @@
 
         if (sidebar.style.width === "200px") {
             sidebar.style.width = "50px";
-            content.style.marginLeft = "250px";
+            // content.style.marginLeft = "250px";
             toggleBtn.innerHTML = '<i class="mdi mdi-arrow-right-bold"></i>'; // Biểu tượng mũi tên phải khi thu gọn sidebar
             newChatLink.innerHTML = '<span class="new-chat-icon-button"><i class="mdi mdi-message-plus" onclick="redirectToWelcome() style="color: white;"></i></span>'; // Chỉ hiển thị button icon khi thu gọn sidebar
             settingsLink.innerHTML = '<a class="nav-link" href="#"><span class="menu-title" style="color: white;"><i class="mdi mdi-settings"></i></span></a>'; // Chỉ hiển thị icon settings khi thu gọn sidebar
@@ -104,7 +90,7 @@
             searchHistory.style.display = "none"; // Ẩn phần lịch sử tìm kiếm khi thu gọn sidebar
         } else {
             sidebar.style.width = "200px";
-            content.style.marginLeft = "250px";
+            // content.style.marginLeft = "250px";
             toggleBtn.innerHTML = '<i class="mdi mdi-arrow-left-bold"></i>'; // Biểu tượng mũi tên trái khi mở rộng sidebar
             newChatLink.innerHTML = '<span class="new-chat-icon-button" ><i class="mdi mdi-message-plus" onclick="redirectToWelcome() style="color: white;"></i></span><span class="menu-title" style="color: white;">New Search</span>'; // Hiển thị cả button icon và text khi mở rộng sidebar
             settingsLink.innerHTML = '<a class="nav-link" href="#"><span class="menu-title" style="color: white;"><i class="mdi mdi-settings"></i>Settings</span></a>'; // Hiển thị cả icon và text của settings khi mở rộng sidebar
@@ -114,97 +100,7 @@
             searchHistory.style.display = "block"; // Hiển thị phần lịch sử tìm kiếm khi mở rộng sidebar
         }
     }
-
 </script>
 
 <!-- Tùy chỉnh CSS -->
-<style>
-    .sidebar {
-        width: 200px; /* Chiều rộng mặc định của sidebar */
-        height: 100vh; /* Chiều cao của sidebar */
-        background-color: #333; /* Màu nền của sidebar */
-        color: #fff; /* Màu chữ của sidebar */
-        transition: width 0.3s ease; /* Hiệu ứng khi thay đổi chiều rộng */
-        position: relative;
-        display: flex; /* Sử dụng flexbox để căn giữa nội dung */
-        flex-direction: column; /* Xếp nội dung theo chiều dọc */
-        justify-content: center; /* Căn giữa theo chiều dọc */
-        align-items: center; /* Căn giữa theo chiều ngang */
-    }
 
-    .content {
-        margin-left: 200px; /* Margin để nội dung không bị che bởi sidebar */
-        transition: margin-left 0.3s ease; /* Hiệu ứng khi thay đổi margin */
-    }
-
-    .toggle-btn {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        cursor: pointer;
-        background: none;
-        border: none;
-        color: #fff;
-    }
-
-    .toggle-btn i {
-        font-size: 20px;
-    }
-
-    .nav-link {
-        color: #fff;
-        text-decoration: none;
-        display: flex;
-        align-items: flex-start;
-        padding: 10px;
-    }
-
-    .nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .nav-link i {
-        margin-right: 10px;
-    }
-
-    .new-chat {
-        margin-top: 20px; /* Thêm margin top cho chức năng New Chat */
-        display: flex;
-        align-items: center;
-    }
-
-    .new-chat-icon-button {
-        margin-right: 0px;
-    }
-    .search-history {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .search-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .search-list li {
-        margin-bottom: 5px;
-    }
-
-    .search-list li a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .search-list li a:hover {
-        text-decoration: underline;
-    }
-    .search-history-container {
-        border: 1px solid #fff; /* Tạo viền trắng 1px xung quanh khung */
-        border-radius: 5px; /* Làm tròn các góc của khung */
-        padding: 10px; /* Thêm padding để tạo khoảng cách giữa viền và nội dung */
-        max-height: 200px; /* Đặt chiều cao tối đa cho khung lịch sử */
-        overflow-y: auto; /* Cho phép cuộn khi lịch sử tìm kiếm dài hơn */
-    }
-
-
-</style>

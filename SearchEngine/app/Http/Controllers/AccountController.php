@@ -78,9 +78,9 @@ class AccountController extends Controller
             $account = Auth::guard('account')->user();
             Auth::login($account);
             session(['account' =>  $account]);
-            $topicNames = DB::table('new_searchs')->where('acc_id', $account)->pluck('topic_name');
 
-            return view('welcome', ['topicNames' => $topicNames]);
+
+            return view('welcome');
         } else {
             return Redirect::back()->withInput();
         }
