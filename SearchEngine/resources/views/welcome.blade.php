@@ -39,6 +39,7 @@
         </div>
         <div class="chat-container">
             <!-- Tin nhắn sẽ được hiển thị ở đây -->
+
         </div>
     </div>
 
@@ -62,12 +63,13 @@
         <div class="input-group rounded-pill">
             <input id="search_word" type="text" class="form-control rounded-pill search-input" placeholder="Try your first search here...">
             <div class="input-group-append">
-                <button class="btn btn-primary square-rounded" type="button">
+                <button class="btn btn-primary square-rounded" type="submit">
                     <i class="mdi mdi-arrow-up"></i>
                 </button>
             </div>
         </div>
     </form>
+
     <button id="pinButton" class="btn btn-link" onclick="toggleUploadOptions()">
         <i class="mdi mdi-attachment"></i>
     </button>
@@ -123,28 +125,25 @@
 
 
         </div>
-        <div class="form-popup" id="myForm2">
-            <form action="/upload" class="form-container" enctype="multipart/form-data">
-                <h1>Upload Photo/Video</h1>
+    <div class="form-popup" id="myForm2">
+        <h1>Upload Photo/Video</h1>
+        <!-- Ô nhập message -->
+        <label for="message"><b>Message</b></label>
+        <input id="message" name="message" placeholder="Enter your message" required><br>
 
-                <!-- Ô nhập message -->
-                <label for="message"><b>Message</b></label>
-                <input id="message" name="message" placeholder="Enter your message" required><br>
+        <!-- Ô chọn file -->
+        <label for="file"><b>File</b></label>
+        <input id="image" type="file" id="file" name="file"  accept="image/*, video/*" onchange="displayDemoMedia(event)" required>
 
-                <!-- Ô chọn file -->
-                <label for="file"><b>File</b></label>
-                <input type="file" id="file" name="file" accept="image/*, video/*" onchange="displayDemoMedia(event)" required>
+        <!-- Hiển thị hình ảnh demo -->
+        <img id="demo-image" src="#" alt="Demo Image" style="display: none; max-width: 300px; max-height: 300px;">
 
-                <!-- Hiển thị hình ảnh demo -->
-                <img id="demo-image" src="#" alt="Demo Image" style="display: none; max-width: 300px; max-height: 300px;">
+        <!-- Hiển thị video demo -->
+        <video id="demo-video" src="#" controls style="display: none; max-width: 300px;"></video>
 
-                <!-- Hiển thị video demo -->
-                <video id="demo-video" src="#" controls style="display: none; max-width: 300px;"></video>
-
-                <button type="submit" class="btn"><i class="mdi mdi-arrow-up"></i>Send</button>
-                <button type="button" class="close-btn" onclick="closeForm2()"> <i class="mdi mdi-close" style="color: red;"></i></button>
-            </form>
-        </div>
+        <button onclick="SearchImage()" class="btn"><i class="mdi mdi-arrow-up"></i>Send</button>
+        <button type="button" class="close-btn" onclick="closeForm2()"> <i class="mdi mdi-close" style="color: red;"></i></button>
+    </div>
         <div class="overlay" id="overlay"></div>
     </div>
     </div>
@@ -152,6 +151,90 @@
 
 
 
+<style>
+
+    .chat-bubble {
+        background-color: #d3d3d3;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .system-chat {
+        width: 90%;
+        align-self: flex-start; /* Đặt hệ thống chat ở bên trái */
+    }
+    .related-images {
+        display: flex;
+        gap: 2px;
+    }
+
+    .related-image {
+        width: calc(50% - 1px); /* 50% width for each image with 1px margin */
+        height: auto;
+    }
+    .result-container {
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+        width: 100%; /* Đặt chiều rộng của result-container */
+        min-width: 300px; /* Đặt kích thước tối thiểu cho result-container */
+    }
+
+
+    .result-item {
+        width: calc(33.33% + -2px);/* Tính toán chiều rộng của mỗi ô item để chúng cách nhau 5px */
+        height: 300px; /* Đặt chiều cao của mỗi ô item */
+        background-color: white; /* Màu nền của mỗi ô item */
+        overflow-y: auto;
+        flex-direction: column;
+        justify-content: space-between; /* Canh hai sub-item ra hai bên */
+        align-items: center;
+    }
+    .sub-item-container {
+        display: flex;
+        justify-content: center; /* Căn giữa theo chiều ngang */
+    }
+
+    .sub-item {
+        margin: 2px; /* Khoảng cách giữa các sub-item */
+        width: 200px; /* Độ rộng của mỗi sub-item */
+        align-self: flex-start; /* Căn trên cùng của sub-item container */
+    }
+
+    .sub-item-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Căn giữa theo chiều dọc */
+        align-items: center; /* Căn giữa theo chiều ngang */
+        max-width: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        padding: 5px; /* Thêm padding để tránh chữ bị tràn ra ngoài */
+
+    }
+
+
+    .sub-item-content img {
+        width: 70%;
+        height: auto;
+        align-self: center; /* Căn giữa ảnh theo chiều ngang */
+        margin-bottom: auto; /* Đẩy ảnh lên trên cùng */
+    }
+
+
+
+    .title2 {
+        text-align: center; /* Căn giữa tiêu đề */
+        margin-bottom: 10px; /* Khoảng cách giữa tiêu đề và sub items */
+    }
+
+
+
+
+
+
+</style>
 @endsection
-<script src="{{asset('js/index.js')}}"></script>
+
 

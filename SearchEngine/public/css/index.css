@@ -40,7 +40,7 @@
 .chat-container {
     width: 80%;
     max-width: 1600px; /* Điều chỉnh kích thước của container chat */
-    max-height: calc(80vh - 100px); /* 80% chiều cao của viewport trừ đi chiều cao của thanh search */
+    max-height: calc(90vh - 100px); /* 80% chiều cao của viewport trừ đi chiều cao của thanh search */
     display: flex;
     flex-direction: column;
     overflow-y: auto; /* Hiển thị thanh cuộn ngang khi nội dung vượt quá */
@@ -56,7 +56,7 @@
 }
 
 .system-chat {
-    width: 50%;
+    width: 90%;
     align-self: flex-start; /* Đặt hệ thống chat ở bên trái */
 }
 
@@ -117,6 +117,7 @@
 .input-group-append {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+
 }
 .btn-secondary {
     background-color: #ffffff;
@@ -124,8 +125,9 @@
 }
 
 .btn-primary {
-    background-color: #6c6e72;
-    border-color: #6c6e72;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
 }
 
 .btn-primary:hover {
@@ -220,7 +222,21 @@
     color: #fff;
 }
 
+.toggle-btn2 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+}
+
 .toggle-btn i {
+    font-size: 20px;
+}
+
+.toggle-btn2 i {
     font-size: 20px;
 }
 
@@ -340,3 +356,21 @@
     /*transform: scale(1.5);*/
 
 }
+
+.selected-media {
+    max-width: 100%; /* Đảm bảo phần tử media không vượt quá kích thước của container */
+    max-height: 100%; /* Đảm bảo phần tử media không vượt quá kích thước của container */
+    margin: 0 auto; /* Canh giữa phần tử media */
+    display: block; /* Đảm bảo phần tử media hiển thị dưới dạng block để có thể canh giữa */
+}
+
+.demo-media-container {
+    display: flex; /* Sử dụng flexbox cho phần demo */
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    align-items: center; /* Canh giữa theo chiều dọc */
+    height: 200px; /* Chiều cao của phần demo */
+    border: 1px solid #ccc; /* Viền xung quanh phần demo */
+    margin-top: 20px; /* Khoảng cách giữa phần demo và phần chat */
+    padding: 10px; /* Khoảng cách bên trong phần demo */
+}
+

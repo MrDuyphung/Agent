@@ -78,8 +78,6 @@ class AccountController extends Controller
             $account = Auth::guard('account')->user();
             Auth::login($account);
             session(['account' =>  $account]);
-
-
             return view('welcome');
         } else {
             return Redirect::back()->withInput();

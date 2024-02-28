@@ -9,5 +9,10 @@
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0.0",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "@google-cloud/vertexai": "^0.4.0",
+        "@google-cloud/vision": "^4.1.0",
+        "fs": "^0.0.1-security"
     }
 }

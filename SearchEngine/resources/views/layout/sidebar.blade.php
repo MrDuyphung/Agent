@@ -42,7 +42,7 @@
     <!-- Nội dung của sidebar -->
     <!-- Thêm các mục mới vào dưới cùng của sidebar -->
     <ul class="nav" style="margin-top: auto;">
-        <li><a href="{{ route('history.destroy') }}" id="clear-history">Clear History</a></li> <!-- Thêm nút Xóa lịch sử -->
+{{--        <li><a href="{{ route('history.destroy') }}" id="clear-history">Clear History</a></li> <!-- Thêm nút Xóa lịch sử -->--}}
         <li class="nav-item settings-link">
             <a class="nav-link" href="#">
                 <span class="menu-title" style="color: white;"><i class="mdi mdi-settings"></i>Settings</span>

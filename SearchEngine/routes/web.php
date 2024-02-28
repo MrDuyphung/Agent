@@ -17,7 +17,6 @@ Route::middleware(['accountMiddleware'])->get('/', function (){
     return view('welcome');
 });
 
-Route::middleware(['accountMiddleware'])->get('/', [\App\Http\Controllers\PersonController::class, 'index2'])->name('layout.sidebar');
 
     Route::get('/search', [\App\Http\Controllers\PersonController::class, 'index'])->name('person.search');
 Route::post('/save-search', [\App\Http\Controllers\PersonController::class, 'index'])->name('search.save');
